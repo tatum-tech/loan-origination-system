@@ -59,6 +59,13 @@ typings/
 .env
 .development.env
 
+# configs/keys
+config/
+
+# ssl
+server.crt
+server.key
+
 .DS_Store
 otherdocs/
 content/config/deployment/ecosystem.json
