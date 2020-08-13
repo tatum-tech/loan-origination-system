@@ -2,10 +2,37 @@
 
 module.exports = require('@digifi/app-config-loader');
 
-
-//  *-------SQL CONFIGURATION DB --------
-//  *-------ENVIRONMENT VARIABLES --------
-//  *'use strict';
+/**
+ * Other sample configurations
+ *
+ *-------MONGO CONFIGURATION DB --------
+    'configuration': {
+      'type': 'db',
+      'db': 'mongoose',
+      'options': {
+        'url': 'mongodb://localhost:27017/config_db',
+        'connection_options': {},
+      },
+    },
+ *-------MONGO CONFIGURATION DB --------
+ *-------SQL CONFIGURATION DB --------
+    'SEQUELIZE': {
+      'type': 'db',
+      'db': 'sequelize',
+      'options': {
+        'database': 'configdb',
+        'username': '',
+        'password': '',
+        'connection_options': {
+          'dialect': 'postgres',
+          'port': 5432,
+          'host': '127.0.0.1',
+        },
+      },
+    },
+ *-------SQL CONFIGURATION DB --------
+ *-------ENVIRONMENT VARIABLES --------
+ *'use strict';
 const minimist = require('minimist');
 const path = require('path');
 const fs = require('fs');
@@ -51,4 +78,5 @@ function appConfig(customProcess){
   }); 
 }
 module.exports = appConfig;
-
+ *-------ENVIRONMENT VARIABLES --------
+ */
