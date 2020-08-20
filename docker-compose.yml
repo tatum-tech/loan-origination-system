@@ -1,0 +1,21 @@
+version: "3"
+services:
+    app:
+        container_name: los-dev
+        restart: always
+        image: 981025113978.dkr.ecr.us-east-1.amazonaws.com/los-dev
+        build:
+            context: .
+            # 2.2.From the root path defined in context, here we define where the Dockerfile resides
+            dockerfile: ./dockerfile    
+        ports:
+            - 80:80
+            - 8786:8786
+            - 8787:8787
+            - 8788:8788
+            - 8080:8080
+            - 443:443
+            - 27017:27017
+        # command: npm start development
+        # network_mode: host
+        
