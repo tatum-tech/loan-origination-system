@@ -1,5 +1,13 @@
 version: "3"
 services:
+    redis:
+        image: redis
+        container_name: cache
+        ports:
+            - "6379:6379"
+        command: ["redis-server", "--appendonly", "yes"]
+        hostname: redis
+        network_mode: host
     app:
         container_name: los-dev
         restart: always
@@ -7,7 +15,8 @@ services:
         build:
             context: .
             # 2.2.From the root path defined in context, here we define where the Dockerfile resides
-            dockerfile: ./dockerfile    
+            dockerfile: ./dockerfile
+        network_mode: host
         ports:
             - 80:80
             - 8786:8786
@@ -16,6 +25,3 @@ services:
             - 8080:8080
             - 443:443
             - 27017:27017
-        # command: npm start development
-        # network_mode: host
-        

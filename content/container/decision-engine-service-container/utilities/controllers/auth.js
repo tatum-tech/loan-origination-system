@@ -45,6 +45,8 @@ async function emailUser(options) {
         user,
       },
     };
+
+    console.log('emailUser ', email)
     return await periodic.core.mailer.sendEmail(email);
   } catch (e) {
     if (e.message === 'The security token included in the request is invalid.' || e.code === 'InvalidClientTokenId' || e.statusCode === 403) {

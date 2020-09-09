@@ -11,6 +11,14 @@ const periodic = require('periodicjs');
 const logger = periodic.logger;
 const mathjs = require('mathjs');
 const AWS = require('aws-sdk');
+// let aws_configs = periodic.settings.extensions[ 'periodicjs.ext.packagecloud' ].client;
+// let s3 = new AWS.S3({
+//   credentials: {
+//     accessKeyId: aws_configs.accessKeyId,
+//     secretAccessKey: aws_configs.accessKey,
+//   }
+// });
+
 const { Duplex } = require('stream');
 const path = require('path');
 const Promisie = require('promisie');
@@ -354,8 +362,13 @@ function uploadAWS(options) {
   return new Promise((resolve, reject) => {
     let { Key, Body, } = options;
     let Bucket = periodic.settings.extensions[ 'periodicjs.ext.packagecloud' ].container.name;
-    let s3 = periodic.aws.s3;
     let params = { Bucket, Key, Body, };
+    let aws_configs = periodic.settings.extensions[ 'periodicjs.ext.packagecloud' ].client;
+    AWS.config.update({ region: aws_configs.region, });
+    AWS.config.credentials = new AWS.Credentials('AKIAIGSIMSD35MTRDLPQ', 'sCvJ4Xz1o6Xq0B0X8mQ8GMCpTiPDIZVeEYRDDB71', null);
+    let s3 = new AWS.S3();
+
+    // console.log('aws_configs ', aws_configs)
     s3.putObject(params, function (err, data) {
       if (err) {
         logger.error(err);

@@ -11,7 +11,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "pm2start": "pm2 kill && pm2 start pm2.json && pm2 log",
-    "start": "node index.js --e",
+    "start": "DEBUG=* node --inspect index.js --e",
     "deploy": "pm2 deploy otherdocs/deployment/ecosystem.json",
     "test": "mocha -R spec --recursive content/container/decision-engine-service-container/test",
     "sass": "node-sass public/container/decision-engine-service-container/stylesheet/scss --output public/container/decision-engine-service-container/stylesheet/ compressed",
@@ -20,8 +20,9 @@
   },
   "dependencies": {
     "@digifi-los/comparison": "^0.0.2",
-    "@digifi-los/credit-process": "^0.1.4",
-    "@digifi-los/data-integrations-core": "^0.0.8",
+    "@digifi-los/credit-process": "github:tatum-tech/credit-process#useLocally",
+    "@digifi-los/data-integrations-core": "github:tatum-tech/data-integrations-core#useLocally",
+    "@digifi-los/data-integrations-strategy": "github:tatum-tech/data-integrations-strategy#useLocally",
     "@digifi-los/form-creator": "^0.0.4",
     "@digifi-los/reactapp": "^0.1.2",
     "@digifi-los/segmentloader": "^0.0.1",

@@ -104,11 +104,11 @@ module.exports = {
             },
           },],
         }, {
-          title: 'DigiFi Support',
+          title: 'Carputty Support',
           textContent: [{
-            name: 'Phone: 646.663.3392',
+            name: 'Phone: 555-555-5555',
           }, {
-            name: 'Email: support@digifi.io',
+            name: 'Email: support@carputty.com',
           },],
         },
         ]),],

@@ -6,6 +6,7 @@ const url = require('url');
 const addQueue = require('../utilities/promisequeue').addQueue;
 const logger = periodic.logger;
 const CREDIT_PIPELINE = require('@digifi-los/credit-process');
+// const CREDIT_PIPELINE = require('/Users/zsanders/Projects/credit-process');
 const CONTAINER_SETTING = periodic.settings.container[ 'decision-engine-service-container' ];
 const Promisie = require('promisie');
 const fs = Promisie.promisifyAll(require('fs-extra'));
@@ -1738,6 +1739,7 @@ async function runBatchSimulations(req, res, next) {
 async function saveFiles(options) {
   const File = periodic.datas.get('standard_file');
   let { result, case_name, organization, user, } = options;
+  // console.log('saveFiles options', options)
   return Promise.all(result.data_sources.map(async data_source => {
     let { name, data, } = data_source;
     let Key, filetype;

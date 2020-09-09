@@ -39,6 +39,16 @@ IntegrationRouter.put('/update_docusign_credentials',
   integrationController.updateDocusignCredentials,
   authController.handleControllerDataResponse);
 
+IntegrationRouter.get('/get_equifax_credentials',
+  ensureApiAuthenticated,
+  integrationController.getDocusignCredentials,
+  authController.handleControllerDataResponse);
+
+IntegrationRouter.put('/update_equifax_credentials',
+  ensureApiAuthenticated,
+  integrationController.updateDocusignCredentials,
+  authController.handleControllerDataResponse);
+
 IntegrationRouter.get('/get_dataintegrations/:id',
   ensureApiAuthenticated,  
   apiController.getVariables,

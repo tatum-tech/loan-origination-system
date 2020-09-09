@@ -818,6 +818,78 @@ async function downloadDocusignInstructions(req, res) {
   }
 }
 
+async function getEquifaxCredentials(req, res, next) {
+  try {
+    const Dataintegration = periodic.datas.get('standard_dataintegration');
+    const user = req.user;
+    const organization = (user && user.association && user.association.organization && user.association.organization._id) ? user.association.organization._id : 'organization';
+    const equifaxConfig = await Dataintegration.model.findOne({ organization, data_provider: 'Equifax' }).lean();
+    if (equifaxConfig) {
+      req.controllerData.equifax = equifaxConfig;
+    } else {
+      req.controllerData.equifax = { default_configuration: {} };
+    }
+
+    console.log('equifaxConfig: ',equifaxConfig);
+    return next();
+  } catch (e) {
+    logger.error(e.message);
+    res.status(500).send('Error retrieving equifax credentials');
+  }
+}
+
+async function updateEquifaxCredentials(req, res, next) {
+  try {
+    const Dataintegration = periodic.datas.get('standard_dataintegration');
+    const user = req.user;
+    const organization = (user && user.association && user.association.organization && user.association.organization._id) ? user.association.organization._id : 'organization';
+    const equifaxConfig = await Dataintegration.model.findOne({ organization, data_provider: 'Equifax' }).lean();
+    if (equifaxConfig) {
+      const default_configuration = Object.assign({}, equifaxConfig.default_configuration, req.body);
+      const updatedDoc = await Dataintegration.model.updateOne({ _id: equifaxConfig._id, organization }, { $set: { default_configuration } });
+      req.controllerData.equifax = updatedDoc;
+    } else {
+      const newdoc = {
+        name: 'Equifax Credential Document',
+        organization,
+        data_provider: 'Equifax',
+        description: 'Equifax Credential Description',
+        status: 'inactive',
+        required_credentials: [
+          'clientId',
+          'clientSecret',
+          'targetAccountId'
+        ],
+        request_type: 'json',
+        default_configuration: Object.assign({}, req.body, { authServer: 'api.sandbox.equifax.com', targetAccountId: false }),
+        timeout: 10000,
+        entitytype: 'dataintegration'
+      }
+      const created = await Dataintegration.create({ newdoc });
+      req.controllerData.docusign = created;
+    }
+    return next();
+  } catch (e) {
+    logger.error(e.message);
+    res.status(500).send('Error adding or updating docusign credentials');
+  }
+}
+
+async function downloadEquifaxInstructions(req, res) {
+  try {
+    const filepath = path.join(process.cwd(), 'content/files/tutorial/docusign_instructions.rtf');
+    const file = fs.readFileSync(filepath);
+    const filename = 'Instructions - DocuSign Setup.rtf';
+    const contenttype = 'application/octet-stream';
+    res.set('Content-Type', contenttype);
+    res.attachment(filename);
+    res.status(200).send(file).end();
+  } catch (e) {
+    logger.error(e.message);
+    res.status(500).send('Error retrieving docusign instructions');
+  }
+}
+
 
 module.exports = {
   getStrategies,
@@ -838,6 +910,9 @@ module.exports = {
   getDocusignCredentials,
   updateDocusignCredentials,
   downloadDocusignInstructions,
+  getEquifaxCredentials,
+  updateEquifaxCredentials,
+  downloadEquifaxInstructions,
   getVMParsers,
   assignVMParserToDataIntegrations,
   updateRedisRules

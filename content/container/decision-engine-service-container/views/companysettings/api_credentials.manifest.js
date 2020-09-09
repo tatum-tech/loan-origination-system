@@ -141,128 +141,240 @@ module.exports = {
               }, {
                 component: 'ResponsiveForm',
                 props: {
-                  formgroups: [{
-                    gridProps: {
-                      key: randomKey(),
-                      style: {
-                        display: 'inline-block',
-                        width: '50%',
-                        verticalAlign: 'top',
-                        textAlign: 'right',
-                      },
-                    },
-                    card: {
-                      props: cardprops({
-                        cardTitle: 'DocuSign Credentials',
-                      }),
-                    },
-                    formElements: [{
-                      label: 'Integration Key',
-                      name: 'clientId',
-                      passProps: {
-                        state: 'isDisabled',
-                      },
-                    }, {
-                      label: 'API Username (GUID)',
-                      name: 'userId',
-                      passProps: {
-                        state: 'isDisabled',
-                      },
-                    }, {
-                      label: 'RSA Private Key',
-                      name: 'privateKey',
-                      type: 'textarea',
-                      passProps: {    
-                        readOnly: true,
-                      },
-                    }, {
-                      type: 'layout',
-                      // value: {
-                      //   component: 'ResponsiveButton',
-                      //   props: {
-                      //     buttonProps: {
-                      //       color: 'isSuccess',
-                      //     },
-                      //     onClick: 'func:this.props.createModal',
-                      //     onclickProps: {
-                      //       pathname: '/modal/connect_docusign',
-                      //       title: 'Connect DocuSign',
-                      //     },
-                      //   },
-                      //   children: 'Connect',
-                      // }
-                      value: {
-                        component: 'div',
-                        props: {
-                          // style: {
-                          //   display: 'flex',
-                          //   justifyContent: 'space-between',
-                          //   marginBottom: '20px',
-                          // },
+                  formgroups: [
+                    {
+                      gridProps: {
+                        key: randomKey(),
+                        style: {
+                          display: 'inline-block',
+                          width: '50%',
+                          verticalAlign: 'top',
+                          textAlign: 'right',
                         },
-                        children: [{
-                          component: 'Semantic.Dropdown',
+                      },
+                      card: {
+                        props: cardprops({
+                          cardTitle: 'DocuSign Credentials',
+                        }),
+                      },
+                      formElements: [{
+                        label: 'Integration Key',
+                        name: 'clientId',
+                        passProps: {
+                          state: 'isDisabled',
+                        },
+                      }, {
+                        label: 'API Username (GUID)',
+                        name: 'userId',
+                        passProps: {
+                          state: 'isDisabled',
+                        },
+                      }, {
+                        label: 'RSA Private Key',
+                        name: 'privateKey',
+                        type: 'textarea',
+                        passProps: {    
+                          readOnly: true,
+                        },
+                      }, {
+                        type: 'layout',
+                        // value: {
+                        //   component: 'ResponsiveButton',
+                        //   props: {
+                        //     buttonProps: {
+                        //       color: 'isSuccess',
+                        //     },
+                        //     onClick: 'func:this.props.createModal',
+                        //     onclickProps: {
+                        //       pathname: '/modal/connect_docusign',
+                        //       title: 'Connect DocuSign',
+                        //     },
+                        //   },
+                        //   children: 'Connect',
+                        // }
+                        value: {
+                          component: 'div',
                           props: {
-                            onSubmit: null,
-                            className: '__re-bulma_button __re-bulma_is-success',
-                            text: 'CONNECT',
+                            // style: {
+                            //   display: 'flex',
+                            //   justifyContent: 'space-between',
+                            //   marginBottom: '20px',
+                            // },
                           },
-                          children: [ {
-                            component: 'Semantic.DropdownMenu',
+                          children: [{
+                            component: 'Semantic.Dropdown',
                             props: {
                               onSubmit: null,
+                              className: '__re-bulma_button __re-bulma_is-success',
+                              text: 'CONNECT',
                             },
                             children: [ {
-                              component: 'Semantic.Item',
+                              component: 'Semantic.DropdownMenu',
                               props: {
                                 onSubmit: null,
                               },
                               children: [ {
-                                component: 'ResponsiveButton',
-                                children: 'Add/Edit Credentials',
-                                // bindprops: true,
+                                component: 'Semantic.Item',
                                 props: {
-                                  buttonProps: {
-                                    color: 'isSuccess',
-                                  },
-                                  onClick: 'func:this.props.createModal',
-                                  onclickProps: {
-                                    pathname: '/modal/connect_docusign',
-                                    title: 'Connect DocuSign',
-                                  },
+                                  onSubmit: null,
                                 },
-                              }, ],
-                            }, {
-                              component: 'Semantic.Item',
-                              props: {
-                                onSubmit: null,
-                              },
-                              children: [ {
-                                component: 'ResponsiveButton',
-                                children: 'DOWNLOAD INSTRUCTIONS',
-                                bindprops: true,
-                                props: {
-                                  onclickBaseUrl: '/integrations/download_docusign_instructions',
-                                  aProps: {
-                                    token: true,
-                                    className: '__re-bulma_button __re-bulma_is-primary',
-                                    style: {
-                                      marginRight: '15px',
+                                children: [ {
+                                  component: 'ResponsiveButton',
+                                  children: 'Add/Edit Credentials',
+                                  // bindprops: true,
+                                  props: {
+                                    buttonProps: {
+                                      color: 'isSuccess',
+                                    },
+                                    onClick: 'func:this.props.createModal',
+                                    onclickProps: {
+                                      pathname: '/modal/connect_docusign',
+                                      title: 'Connect DocuSign',
                                     },
                                   },
+                                }, ],
+                              }, {
+                                component: 'Semantic.Item',
+                                props: {
+                                  onSubmit: null,
                                 },
-                              }, ],
-                            }, 
-                            ],
+                                children: [ {
+                                  component: 'ResponsiveButton',
+                                  children: 'DOWNLOAD INSTRUCTIONS',
+                                  bindprops: true,
+                                  props: {
+                                    onclickBaseUrl: '/integrations/download_docusign_instructions',
+                                    aProps: {
+                                      token: true,
+                                      className: '__re-bulma_button __re-bulma_is-primary',
+                                      style: {
+                                        marginRight: '15px',
+                                      },
+                                    },
+                                  },
+                                }, ],
+                              }, 
+                              ],
+                            }, ],
                           }, ],
-                        }, ],
+                        },
+                      }, ],
+                    },
+                    {
+                      gridProps: {
+                        key: randomKey(),
+                        style: {
+                          display: 'inline-block',
+                          width: '50%',
+                          verticalAlign: 'top',
+                          textAlign: 'right',
+                        },
                       },
-                    }, ],
-                  },
+                      card: {
+                        props: cardprops({
+                          cardTitle: 'Equifax Credentials',
+                        }),
+                      },
+                      formElements: [{
+                        label: 'Integration Key',
+                        name: 'clientId',
+                        passProps: {
+                          state: 'isDisabled',
+                        },
+                      }, {
+                        label: 'Client Secret',
+                        name: 'clientSecret',
+                        passProps: {
+                          state: 'isDisabled',
+                        },
+                      }, {
+                        type: 'layout',
+                        // value: {
+                        //   component: 'ResponsiveButton',
+                        //   props: {
+                        //     buttonProps: {
+                        //       color: 'isSuccess',
+                        //     },
+                        //     onClick: 'func:this.props.createModal',
+                        //     onclickProps: {
+                        //       pathname: '/modal/connect_docusign',
+                        //       title: 'Connect DocuSign',
+                        //     },
+                        //   },
+                        //   children: 'Connect',
+                        // }
+                        value: {
+                          component: 'div',
+                          props: {
+                            // style: {
+                            //   display: 'flex',
+                            //   justifyContent: 'space-between',
+                            //   marginBottom: '20px',
+                            // },
+                          },
+                          children: [{
+                            component: 'Semantic.Dropdown',
+                            props: {
+                              onSubmit: null,
+                              className: '__re-bulma_button __re-bulma_is-success',
+                              text: 'CONNECT',
+                            },
+                            children: [ {
+                              component: 'Semantic.DropdownMenu',
+                              props: {
+                                onSubmit: null,
+                              },
+                              children: [ {
+                                component: 'Semantic.Item',
+                                props: {
+                                  onSubmit: null,
+                                },
+                                children: [ {
+                                  component: 'ResponsiveButton',
+                                  children: 'Add/Edit Credentials',
+                                  // bindprops: true,
+                                  props: {
+                                    buttonProps: {
+                                      color: 'isSuccess',
+                                    },
+                                    onClick: 'func:this.props.createModal',
+                                    onclickProps: {
+                                      pathname: '/modal/connect_docusign',
+                                      title: 'Connect DocuSign',
+                                    },
+                                  },
+                                }, ],
+                              }, {
+                                component: 'Semantic.Item',
+                                props: {
+                                  onSubmit: null,
+                                },
+                                children: [ {
+                                  component: 'ResponsiveButton',
+                                  children: 'DOWNLOAD INSTRUCTIONS',
+                                  bindprops: true,
+                                  props: {
+                                    onclickBaseUrl: '/integrations/download_docusign_instructions',
+                                    aProps: {
+                                      token: true,
+                                      className: '__re-bulma_button __re-bulma_is-primary',
+                                      style: {
+                                        marginRight: '15px',
+                                      },
+                                    },
+                                  },
+                                }, ],
+                              }, 
+                              ],
+                            }, ],
+                          }, ],
+                        },
+                      }, ],
+                    },
                   ],
                 },
                 asyncprops: {
-                  formdata: ['docusigndata', 'docusign', 'default_configuration', ],
+                  formdata: ['docusigndata', 'docusign', 'default_configuration', 'equifaxdata', 'equifax'],
                 },
               },
             ],
@@ -272,6 +384,7 @@ module.exports = {
       resources: {
         orgdata: '/organization/get_org',
         docusigndata: '/integrations/get_docusign_credentials',
+        equifaxdata: '/integrations/get_equifax_credentials',
         apidata: '/api/api_tabs',
         checkdata: {
           url: '/auth/run_checks',
