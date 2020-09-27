@@ -13,6 +13,7 @@ const mathjs = require('mathjs');
 const AWS = require('aws-sdk');
 // let aws_configs = periodic.settings.extensions[ 'periodicjs.ext.packagecloud' ].client;
 // let s3 = new AWS.S3({
+//   region: aws_configs.region,
 //   credentials: {
 //     accessKeyId: aws_configs.accessKeyId,
 //     secretAccessKey: aws_configs.accessKey,
@@ -365,7 +366,7 @@ function uploadAWS(options) {
     let params = { Bucket, Key, Body, };
     let aws_configs = periodic.settings.extensions[ 'periodicjs.ext.packagecloud' ].client;
     AWS.config.update({ region: aws_configs.region, });
-    AWS.config.credentials = new AWS.Credentials('AKIAIGSIMSD35MTRDLPQ', 'sCvJ4Xz1o6Xq0B0X8mQ8GMCpTiPDIZVeEYRDDB71', null);
+    AWS.config.credentials = new AWS.Credentials(aws_configs.accessKeyId, aws_configs.accessKey, null);
     let s3 = new AWS.S3();
 
     // console.log('aws_configs ', aws_configs)
@@ -385,7 +386,10 @@ function uploadToAWSFromStream(options) {
   return new Promise((resolve, reject) => {
     let { Key, Body, } = options;
     let Bucket = periodic.settings.extensions[ 'periodicjs.ext.packagecloud' ].container.name;
-    let s3 = periodic.aws.s3;
+    let aws_configs = periodic.settings.extensions[ 'periodicjs.ext.packagecloud' ].client;
+    AWS.config.update({ region: aws_configs.region, });
+    AWS.config.credentials = new AWS.Credentials(aws_configs.accessKeyId, aws_configs.accessKey, null);
+    let s3 = new AWS.S3();
     let params = { Bucket, Key, Body, };
     s3.upload(params, function (err, data) {
       if (err) {
@@ -403,7 +407,11 @@ function getFileSizeFromS3(options) {
   return new Promise((resolve, reject) => {
     let { Key, Body, } = options;
     let Bucket = periodic.settings.extensions[ 'periodicjs.ext.packagecloud' ].container.name;
-    let s3 = periodic.aws.s3;
+    let aws_configs = periodic.settings.extensions[ 'periodicjs.ext.packagecloud' ].client;
+    AWS.config.update({ region: aws_configs.region, });
+    AWS.config.credentials = new AWS.Credentials(aws_configs.accessKeyId, aws_configs.accessKey, null);
+    // let s3 = periodic.aws.s3;
+    let s3 = new AWS.S3();
     let params = { Bucket, Key, };
     s3.headObject(params, function (err, data) {
       if (err) {
@@ -455,6 +463,7 @@ function downloadAWS(options) {
     AWS.config.update({ region: aws_configs.region, });
     AWS.config.credentials = new AWS.Credentials(aws_configs.accessKeyId, aws_configs.accessKey, null);
     let s3 = new AWS.S3();
+    console.log('AWS.config ', AWS.config)
     let params = { Bucket, Key: fileurl, };
     s3.getObject(params, (err, data) => {
       if (err) reject(err);

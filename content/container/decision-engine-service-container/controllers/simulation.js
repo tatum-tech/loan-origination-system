@@ -1744,14 +1744,14 @@ async function saveFiles(options) {
     let { name, data, } = data_source;
     let Key, filetype;
     try {
-      JSON.parse(data);
+      JSON.stringify(data);
       Key = `dataintegrations/${case_name.replace(/\//g, '_')}/${name.replace(/\//g, '_')}_${new Date().getTime()}.json`;
       filetype = 'json';
     } catch (e) {
       Key = `dataintegrations/${case_name.replace(/\//g, '_')}/${name.replace(/\//g, '_')}_${new Date().getTime()}.xml`;
       filetype = 'xml';
     }
-    await helpers.uploadAWS({ Key, Body: data, });
+    await helpers.uploadAWS({ Key, Body: JSON.stringify(data) });
     return await File.create({ newdoc: Object.assign({}, { name, fileurl: Key, filetype, organization, user, }), });
   }));
 }
@@ -1819,6 +1819,19 @@ async function generateDocumentCreationFile({ md, case_name, organization, user,
   }
 }
 
+function stripTokens(result) {
+  try {
+    if (result.output_variables.experian_token) {
+      delete result.output_variables.experian_token
+    }
+
+    return result;
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+
 async function runIndividualSimulation(req, res, next) {
   try {
     req.controllerData = req.controllerData || {};
@@ -1829,6 +1842,7 @@ async function runIndividualSimulation(req, res, next) {
     if (req.controllerData.testcase) {
       let result = await credit_pipeline(Object.assign({}, req.controllerData.testcase, { strategy_status: req.controllerData.strategy_status, }));
       result = formatSimulationResult(result);
+      result = stripTokens(result); // remove tokens from output
       const module_order = result.processing_detail || [];
       const compiled_order = req.controllerData.compiled_order || [];
       const emailModule = [];

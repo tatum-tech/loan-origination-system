@@ -297,7 +297,7 @@ function getVariables(req, res, next) {
         ? req.params.id
         : 'organization';
   Variable.model.find({ organization, })
-    .then(variables => {
+    .then(variables => {      
       req.controllerData.inputVariables = variables.filter(i => i.type === 'Input').sort((a, b) => (a.title.toUpperCase() < b.title.toUpperCase()) ? -1 : (a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : 0);
       req.controllerData.outputVariables = variables.filter(i => i.type === 'Output').sort((a, b) => (a.title.toUpperCase() < b.title.toUpperCase()) ? -1 : (a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : 0);
       return next();

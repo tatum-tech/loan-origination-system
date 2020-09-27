@@ -326,6 +326,7 @@ function uploadBulkTestCases(req) {
               let csv_headers = csv_data.shift() || [];
               let count = csv_headers.reduce((acc, curr) => Object.assign(acc, { [ curr ]: (acc[ curr ] || 0) + 1, }), {});
               let duplicates = Object.keys(count).filter(header => count[ header ] > 1);
+              console.log('duplicates', duplicates)
               if (duplicates.length) req.error = `The following headers have duplicates in the csv: ${duplicates.join(',')}`;
               let test_cases = csv_data.map(row => row.filter(el => el !== ' ')).map(row => {
                 let testcase = csv_headers.reduce((tc, header, index) => {
